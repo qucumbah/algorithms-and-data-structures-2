@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
 #include "util.h"
 
@@ -8,26 +9,24 @@
 int partition(void* array, size_t itemSize, int l, int r, Comparator* comparator) {
   int pivotIdx = (l + r) / 2;
 
+  void* pivot = malloc(itemSize);
+  memcpy(pivot, array + pivotIdx * itemSize, itemSize);
+
   while (true) {
-    while (comparator(array + l * itemSize, array + pivotIdx * itemSize) < 0) {
+    while (comparator(array + l * itemSize, pivot) < 0) {
       l += 1;
     }
 
-    while (comparator(array + r * itemSize, array + pivotIdx * itemSize) > 0) {
+    while (comparator(array + r * itemSize, pivot) > 0) {
       r -= 1;
     }
 
     if (l >= r) {
+      free(pivot);
       return r;
     }
 
     swap(array, itemSize, l, r);
-
-    if (pivotIdx == l) {
-      pivotIdx = r;
-    } else if (pivotIdx == r) {
-      pivotIdx = l;
-    }
 
     l += 1;
     r -= 1;

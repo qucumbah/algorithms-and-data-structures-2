@@ -2,9 +2,10 @@
 #include <stdbool.h>
 
 #include "util.h"
-#include "qsort.h"
+#include "quicksort.h"
 #include "mergesort.h"
 #include "Queue.h"
+#include "huffman.h"
 
 void testMergeSort() {
   int array[15] = {4, 22, 65, 67, 77, 87, 90, 23, 76, 90, 74, 5, 74, 89, 82};
@@ -41,8 +42,13 @@ void testQueue() {
   printf("first: %d; last: %d; size: %d\n", *(int*)getFront(q), *(int*)getBack(q), q->nextIdx);
 }
 
+void testHuffman() {
+  huffmanEncode("arraySmol.bin", "f2.bin");
+  huffmanDecode("f2.bin", "decoded.bin");
+}
+
 int main() {
-  testQueue();
+  testHuffman();
 
   return 0;
 }

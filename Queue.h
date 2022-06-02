@@ -62,3 +62,12 @@ void addBack(Queue* queue, void* item) {
   memmove(queue->items + queue->nextIdx * queue->itemSize, item, queue->itemSize);
   queue->nextIdx += 1;
 }
+
+int queueSize(Queue* queue) {
+  return queue->nextIdx;
+}
+
+void destroyQueue(Queue* queue) {
+  free(queue->items);
+  free(queue);
+}
