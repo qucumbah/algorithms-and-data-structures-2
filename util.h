@@ -15,6 +15,6 @@ void swap(void* array, size_t itemSize, int a, int b) {
   }
 }
 
-int compareInts(int* a, int* b) {
-  return *a - *b;
+int compareInts(const void* a, const void* b) {
+  return *(int*)a - *(int*)b;
 }

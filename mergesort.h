@@ -46,7 +46,7 @@ void merge(char* file, size_t itemSize, int length, int s, Comparator* comparato
     int i2 = 0;
 
     while (i1 < s && i2 < s && !feof(b1) && !feof(b2)) {
-      if ((*comparator)((const void*)itemBytes1, (const void*)itemBytes2) < 0) {
+      if (comparator(itemBytes1, itemBytes2) < 0) {
         fwrite(itemBytes1, itemSize, 1, a);
         fread(itemBytes1, itemSize, 1, b1);
         i1 += 1;

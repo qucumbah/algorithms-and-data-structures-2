@@ -9,11 +9,11 @@ int partition(void* array, size_t itemSize, int l, int r, Comparator* comparator
   int pivotIdx = (l + r) / 2;
 
   while (true) {
-    while ((*comparator)(&array[l * itemSize], &array[pivotIdx * itemSize]) < 0) {
+    while (comparator(array + l * itemSize, array + pivotIdx * itemSize) < 0) {
       l += 1;
     }
 
-    while ((*comparator)(&array[r * itemSize], &array[pivotIdx * itemSize]) > 0) {
+    while (comparator(array + r * itemSize, array + pivotIdx * itemSize) > 0) {
       r -= 1;
     }
 
