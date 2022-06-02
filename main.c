@@ -4,6 +4,7 @@
 #include "util.h"
 #include "qsort.h"
 #include "mergesort.h"
+#include "Queue.h"
 
 void testMergeSort() {
   int array[15] = {4, 22, 65, 67, 77, 87, 90, 23, 76, 90, 74, 5, 74, 89, 82};
@@ -26,8 +27,22 @@ void testQuicksort() {
   }
 }
 
+void testQueue() {
+  int items[5] = {0, 1, 2, 3, 4};
+
+  Queue* q = createQueueFromItems(items, sizeof(int), sizeof(items) / sizeof(int));
+  printf("first: %d; last: %d; size: %d\n", *(int*)getFront(q), *(int*)getBack(q), q->nextIdx);
+  rmFront(q);
+  printf("first: %d; last: %d; size: %d\n", *(int*)getFront(q), *(int*)getBack(q), q->nextIdx);
+
+  int someInt = 5;
+
+  addBack(q, &someInt);
+  printf("first: %d; last: %d; size: %d\n", *(int*)getFront(q), *(int*)getBack(q), q->nextIdx);
+}
+
 int main() {
-  testMergeSort();
+  testQueue();
 
   return 0;
 }
