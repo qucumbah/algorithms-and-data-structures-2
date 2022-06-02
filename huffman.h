@@ -4,6 +4,7 @@
 #include "Queue.h"
 #include "quicksort.h"
 #include "BitFileWriter.h"
+#include "BitFileReader.h"
 
 #pragma once
 
@@ -406,6 +407,7 @@ Tree* readTree(FILE* inFile) {
   }
 
   Tree* result = malloc(sizeof(Tree));
+  result->isLeaf = false;
   result->left = left;
   result->right = right;
 
@@ -421,4 +423,30 @@ void huffmanDecode(char* inFilePath, char* outFilePath) {
   fread(&bits, sizeof(int), 1, inFile);
 
   printf("%d\n", bits);
+
+  FILE* outFile = fopen(outFilePath, "wb");
+
+  BitFileReader* reader = createBitFileReader(inFile);
+  // for (int i = 0; i < bits; i += 1) {
+  //   unsigned char bit = readBit(reader);
+  //   printf("%d %d\n", i, bit);
+  // }
+
+  Tree* curTree = tree;
+  for (int i = 0; i < bits; i += 1) {
+    unsigned char bit = readBit(reader);
+    printf("%d %d\n", i, bit);
+
+    if (bit == 0) {
+      curTree = curTree->left;
+    } else {
+      curTree = curTree->right;
+    }
+
+    if (curTree->isLeaf) {
+      printf("found symbol %c\n", curTree->symbol);
+      fwrite(&curTree->symbol, 1, 1, outFile);
+      curTree = tree;
+    }
+  }
 }
