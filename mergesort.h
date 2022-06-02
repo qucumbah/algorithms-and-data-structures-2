@@ -2,13 +2,9 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-typedef int (Comparator)(const void* a, const void* b);
+#include "util.h"
 
-void checkSize(FILE* file) {
-  fseek(file, 0, SEEK_END);
-  printf("%ld\n", ftell(file));
-  rewind(file);
-}
+#pragma once
 
 void split(char* file, size_t itemSize, int s) {
   FILE* a = fopen(file, "rb");
@@ -97,26 +93,8 @@ void mergesort(char* file, size_t itemSize, int length, Comparator* comparator) 
   while (s < length) {
     // Фаза 1
     split(file, itemSize, s);
-    // фаза 2
+    // Фаза 2
     merge(file, itemSize, length, s, comparator);
     s *= 2;
   }
-}
-
-int compareInts(int* a, int* b) {
-  return *a - *b;
-}
-
-int main() {
-  int array[15] = {4, 22, 65, 67, 77, 87, 90, 23, 76, 90, 74, 5, 74, 89, 82};
-
-  FILE* arrayStorage = fopen("array.bin", "wb");
-  fwrite(array, sizeof(int), sizeof(array) / sizeof(int), arrayStorage);
-  fclose(arrayStorage);
-  // system("hexdump ./array.bin");
-
-  mergesort("array.bin", sizeof(int), sizeof(array) / sizeof(int), compareInts);
-  // system("hexdump ./array.bin");
-
-  return 0;
 }
