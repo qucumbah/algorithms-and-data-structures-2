@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <assert.h>
 
 #include "util.h"
 #include "quicksort.h"
 #include "mergesort.h"
 #include "Queue.h"
+#include "List.h"
 #include "huffman.h"
 
 void testMergeSort() {
@@ -42,13 +44,37 @@ void testQueue() {
   printf("first: %d; last: %d; size: %d\n", *(int*)getFront(q), *(int*)getBack(q), q->nextIdx);
 }
 
+void testList() {
+  List* list = createList(sizeof(int));
+  for (int i = 0; i < 16; i += 1) {
+    listAdd(list, &i);
+  }
+
+  assert(list->size == 16);
+  assert(list->capacity == 16);
+
+  int newValue = 16;
+  listAdd(list, &newValue);
+
+  assert(list->size == 17);
+  assert(list->capacity == 32);
+
+  for (int i = 0; i < 17; i += 1) {
+    assert(listFind(list, &i, compareInts) == i);
+  }
+
+  int nonExistentValue = 180;
+  assert(listFind(list, &nonExistentValue, compareInts) == -1);
+}
+
 void testHuffman() {
   huffmanEncode("arraySmol.bin", "f2.bin");
   huffmanDecode("f2.bin", "decoded.bin");
 }
 
 int main() {
-  testHuffman();
+  // testHuffman();
+  testList();
 
   return 0;
 }
