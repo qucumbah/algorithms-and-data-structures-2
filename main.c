@@ -7,6 +7,7 @@
 #include "mergesort.h"
 #include "Queue.h"
 #include "List.h"
+#include "HashTable.h"
 #include "huffman.h"
 
 void testMergeSort() {
@@ -67,6 +68,14 @@ void testList() {
   assert(listFind(list, &nonExistentValue, compareInts) == -1);
 }
 
+void testHashTable() {
+  HashTable* table = createHashTable(sizeof(int));
+  char key[] = "somekey";
+  int item = 15;
+  hashTableAdd(table, key, &item);
+  int item2 = *(int*)hashTableGet(table, key);
+}
+
 void testHuffman() {
   huffmanEncode("arraySmol.bin", "f2.bin");
   huffmanDecode("f2.bin", "decoded.bin");
@@ -74,7 +83,7 @@ void testHuffman() {
 
 int main() {
   // testHuffman();
-  testList();
+  testHashTable();
 
   return 0;
 }
