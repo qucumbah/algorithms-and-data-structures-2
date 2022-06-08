@@ -49,7 +49,7 @@ int* getNonZeroFrequencies(int* frequencies) {
   return nonZeroes->items;
 }
 
-typedef struct {
+struct Tree {
   int frequency;
   bool isLeaf;
 
@@ -57,7 +57,9 @@ typedef struct {
   struct Tree* right;
 
   char symbol;
-} Tree;
+};
+
+typedef struct Tree Tree;
 
 Tree* createNodeFromFrequency(char symbol, int frequency) {
   Tree* result = malloc(sizeof(Tree));
@@ -106,8 +108,8 @@ Tree* buildTree(Tree* nodes, int nonZeroFrequenciesCount) {
     Tree newNode = {
       .frequency = lowest1->frequency + lowest2->frequency,
       .isLeaf = false,
-      .left = (struct Node*)lowest1,
-      .right = (struct Node*)lowest2,
+      .left = lowest1,
+      .right = lowest2,
     };
 
     addBack(q2, &newNode);
