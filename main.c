@@ -69,11 +69,34 @@ void testList() {
 }
 
 void testHashTable() {
+  List* keys = createList(sizeof(char*));
+  List* values = createList(sizeof(int));
+
+  FILE* data = fopen("./hashTableData.txt", "r");
+  while (!feof(data)) {
+    char* keyBuffer = malloc(256);
+    int valueBuffer;
+
+    fscanf(data, "%s %d", keyBuffer, &valueBuffer);
+
+    listAdd(keys, &keyBuffer);
+    listAdd(values, &valueBuffer);
+  }
+
   HashTable* table = createHashTable(sizeof(int));
-  char key[] = "somekey";
-  int item = 15;
-  hashTableAdd(table, key, &item);
-  int item2 = *(int*)hashTableGet(table, key);
+
+  for (int i = 0; i < keys->size; i += 1) {
+    char* key = *(char**)listGet(keys, i);
+    int value = *(int*)listGet(values, i);
+    printf("Adding (%s, %d) to the hash table\n", key, value);
+    hashTableAdd(table, key, &value);
+  }
+
+  for (int i = 0; i < keys->size; i += 1) {
+    char* key = *(char**)listGet(keys, i);
+    int value = *(int*)hashTableGet(table, key);
+    printf("Item with key %s: %d\n", key, value);
+  }
 }
 
 void testHuffman() {
