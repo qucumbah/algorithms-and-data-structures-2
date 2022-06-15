@@ -23,6 +23,11 @@ int compareEntries(const void* a, const void* b) {
   return entryA->key < entryB->key ? -1 : 1;
 }
 
+typedef struct {
+  size_t size;
+  void* data;
+} BlockFileEntry;
+
 /*
 Block file structure:
 int amount of entries N
@@ -34,7 +39,7 @@ size_t key
 size_t start
 size_t size
 */
-void* readFromBlock(char* blockFilePath, size_t key) {
+BlockFileEntry readFromBlock(char* blockFilePath, size_t key) {
   FILE* blockFile = fopen(blockFilePath, "rb");
 
   int entriesCount;
@@ -58,7 +63,12 @@ void* readFromBlock(char* blockFilePath, size_t key) {
   BlockFileDataDescriptor* foundEntry = &entries[foundEntryIndex];
 
   if (foundEntry->key != key) {
-    return NULL;
+    BlockFileEntry result = {
+      .size = 0,
+      .data = NULL,
+    };
+
+    return result;
   }
 
   size_t start = foundEntry->start;
@@ -68,10 +78,15 @@ void* readFromBlock(char* blockFilePath, size_t key) {
 
   fseek(blockFile, start, SEEK_SET);
 
-  void* result = malloc(size);
-  fread(result, size, 1, blockFile);
+  void* resultData = malloc(size);
+  fread(resultData, size, 1, blockFile);
 
   fclose(blockFile);
+
+  BlockFileEntry result = {
+    .size = size,
+    .data = resultData,
+  };
 
   return result;
 }

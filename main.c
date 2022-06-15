@@ -129,9 +129,15 @@ void testBlockFile() {
     int key = *(int*)listGet(keys, i);
     char* value = *(char**)listGet(values, i);
 
-    char* readValue = readFromBlock(blockFilePath, key);
+    BlockFileEntry readValue = readFromBlock(blockFilePath, key);
 
-    assert(strcmp(value, readValue) == 0);
+    assert(readValue.size == strlen(value));
+
+    for (int i = 0; i < readValue.size; i += 1) {
+      assert(((char*)readValue.data)[i] == value[i]);
+    }
+
+    printf("Successfully read %s from block file with key %d\n", value, key);
   }
 }
 
