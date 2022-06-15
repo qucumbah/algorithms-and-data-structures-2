@@ -9,6 +9,7 @@
 #include "List.h"
 #include "HashTable.h"
 #include "blockFile.h"
+#include "indexFile.h"
 #include "huffman.h"
 
 void testMergeSort() {
@@ -142,7 +143,16 @@ void testBlockFile() {
 }
 
 void testIndexSearch() {
-  
+  char* indexFileLocation = "data/index.bin";
+
+  createIndexFile(indexFileLocation);
+
+  expandIndexFile(indexFileLocation, 15);
+  expandIndexFile(indexFileLocation, 20);
+  expandIndexFile(indexFileLocation, 3);
+
+  Block block = getBlockForKey(indexFileLocation, 35);
+  printf("%d (%d-%d)\n", block.number, block.sizeDescriptor.start, block.sizeDescriptor.end);
 }
 
 void testHuffman() {
@@ -151,7 +161,7 @@ void testHuffman() {
 }
 
 int main() {
-  testBlockFile();
+  testIndexSearch();
 
   return 0;
 }
