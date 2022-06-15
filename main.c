@@ -8,6 +8,7 @@
 #include "Queue.h"
 #include "List.h"
 #include "HashTable.h"
+#include "blockFile.h"
 #include "huffman.h"
 
 void testMergeSort() {
@@ -99,14 +100,52 @@ void testHashTable() {
   }
 }
 
+void testBlockFile() {
+  char blockFilePath[] = "data/block2.bin";
+  createBlockFile(blockFilePath);
+
+  List* keys = createList(sizeof(int));
+  List* values = createList(sizeof(char*));
+
+  FILE* data = fopen("./hashTableData.txt", "r");
+  while (!feof(data)) {
+    int keyBuffer;
+    char* valueBuffer = malloc(256);
+
+    fscanf(data, "%s %d", valueBuffer, &keyBuffer);
+
+    listAdd(keys, &keyBuffer);
+    listAdd(values, &valueBuffer);
+  }
+
+  for (int i = 0; i < keys->size; i += 1) {
+    int key = *(int*)listGet(keys, i);
+    char* value = *(char**)listGet(values, i);
+    printf("Adding (%d, %s) to the block\n", key, value);
+    writeToBlock(blockFilePath, key, value, strlen(value));
+  }
+
+  for (int i = 0; i < keys->size; i += 1) {
+    int key = *(int*)listGet(keys, i);
+    char* value = *(char**)listGet(values, i);
+
+    char* readValue = readFromBlock(blockFilePath, key);
+
+    assert(strcmp(value, readValue) == 0);
+  }
+}
+
+void testIndexSearch() {
+  
+}
+
 void testHuffman() {
   huffmanEncode("arraySmol.bin", "f2.bin");
   huffmanDecode("f2.bin", "decoded.bin");
 }
 
 int main() {
-  // testHuffman();
-  testHashTable();
+  testBlockFile();
 
   return 0;
 }

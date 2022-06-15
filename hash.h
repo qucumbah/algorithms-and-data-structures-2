@@ -1,3 +1,5 @@
+#pragma once
+
 int circularShift(int value) {
   return value << 1 | value >> 31;
 }

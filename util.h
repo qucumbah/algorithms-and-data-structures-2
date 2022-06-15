@@ -41,3 +41,29 @@ void* mapArray(void* from, size_t fromSize, size_t toSize, int arrayLength, MapF
   (byte & 0x04 ? '1' : '0'), \
   (byte & 0x02 ? '1' : '0'), \
   (byte & 0x01 ? '1' : '0')
+
+int binSearch(
+  void* array,
+  size_t itemSize,
+  int arrayLength,
+  void* itemToFind,
+  Comparator comparator
+) {
+  assert(arrayLength > 0);
+  int l = 0;
+  int r = arrayLength - 1;
+
+  while (l != r) {
+    int m = (l + r) / 2;
+    int comparisonResult = comparator(array + m * itemSize, itemToFind);
+    if (comparisonResult < 0) {
+      l = m + 1;
+    } else if (comparisonResult > 0) {
+      r = m;
+    } else {
+      return m;
+    }
+  }
+
+  return (comparator(array + l * itemSize, itemToFind) >= 0) ? l : l + 1;
+}
