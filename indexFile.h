@@ -3,6 +3,8 @@
 
 #include "util.h"
 
+#pragma once
+
 /*
 Index file structure:
 int amount of blocks N

@@ -10,6 +10,7 @@
 #include "HashTable.h"
 #include "blockFile.h"
 #include "indexFile.h"
+#include "sparceIndex.h"
 #include "huffman.h"
 
 void testMergeSort() {
@@ -155,13 +156,30 @@ void testIndexSearch() {
   printf("%d (%d-%d)\n", block.number, block.sizeDescriptor.start, block.sizeDescriptor.end);
 }
 
+void testSparceIndex() {
+  sparceIndexInit();
+
+  sparceIndexExpand(5);
+  sparceIndexExpand(5);
+  sparceIndexExpand(5);
+  
+  for (int i = 0; i < 15; i += 1) {
+    sparceIndexWrite(i, &i, sizeof(int));
+  }
+
+  for (int i = 0; i < 15; i += 1) {
+    BlockFileEntry result = sparceIndexRead(i);
+    assert(*(int*)result.data == i);
+  }
+}
+
 void testHuffman() {
   huffmanEncode("arraySmol.bin", "f2.bin");
   huffmanDecode("f2.bin", "decoded.bin");
 }
 
 int main() {
-  testIndexSearch();
+  testSparceIndex();
 
   return 0;
 }
