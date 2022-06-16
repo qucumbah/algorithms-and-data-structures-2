@@ -360,7 +360,7 @@ Tree* huffmanEncode(char* inFilePath, char* outFilePath) {
 
   logTable(codeLengths, codes);
 
-  FILE* outFile = fopen("f2.bin", "wb");
+  FILE* outFile = fopen(outFilePath, "wb");
 
   assert(inFile != outFile);
 
@@ -451,4 +451,6 @@ void huffmanDecode(char* inFilePath, char* outFilePath) {
       curTree = tree;
     }
   }
+
+  fclose(outFile);
 }
