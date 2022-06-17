@@ -190,7 +190,12 @@ void testHuffmanEntry(void* input) {
 }
 
 void testHuffman() {
+  testHuffmanEntry("some1.txt");
+  testHuffmanEntry("some2.txt");
   testHuffmanEntry("book.txt");
+  testHuffmanEntry("log.txt");
+  testHuffmanEntry("main.c");
+  testHuffmanEntry("huffman.h");
 }
 
 int main() {
