@@ -196,6 +196,8 @@ void testHuffman() {
   testHuffmanEntry("log.txt");
   testHuffmanEntry("main.c");
   testHuffmanEntry("huffman.h");
+  testHuffmanEntry("a.out");
+  testHuffmanEntry("image.png");
 }
 
 int main() {
