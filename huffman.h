@@ -259,48 +259,6 @@ void writeHeader(
   fwrite(&totalMessageLength, sizeof(int), 1, outFile);
 }
 
-/*
-Format:
-int nonZeroFrequenciesCount
-for each non-zero frequency:
-  char character
-  unsigned char code length
-  unsigned chars - code
-total message length - the end of the header
-message bits
-*/
-void writeHeaderOld(
-  FILE* outFile,
-  int* frequencies,
-  int nonZeroFrequenciesCount,
-  unsigned char* codeLengths,
-  unsigned char** codes
-) {
-  fwrite(&nonZeroFrequenciesCount, sizeof(int), 1, outFile);
-
-  int totalMessageLength = 0;
-  for (int i = 0; i < 256; i += 1) {
-    if (frequencies[i] == 0) {
-      continue;
-    }
-
-    totalMessageLength += frequencies[i] * codeLengths[i];
-
-    unsigned char c = (unsigned char)i;
-    fwrite(&c, 1, 1, outFile);
-
-    unsigned char codeLength = codeLengths[i];
-    fwrite(&codeLength, 1, 1, outFile);
-    for (int j = 0; j < codeLength; j += 1) {
-      fwrite(&(codes[i][j]), 1, 1, outFile);
-    }
-
-    printf("Header char: %c %d %d\n", c, codeLength, frequencies[i]);
-  }
-
-  fwrite(&totalMessageLength, sizeof(int), 1, outFile);
-}
-
 void writeMessage(FILE* outFile, unsigned char* codeLengths, unsigned char** codes, FILE* inFile) {
   BitFileWriter* writer = createBitFileWriter(outFile);
 
@@ -429,10 +387,6 @@ void huffmanDecode(char* inFilePath, char* outFilePath) {
   FILE* outFile = fopen(outFilePath, "wb");
 
   BitFileReader* reader = createBitFileReader(inFile);
-  // for (int i = 0; i < bits; i += 1) {
-  //   unsigned char bit = readBit(reader);
-  //   printf("%d %d\n", i, bit);
-  // }
 
   Tree* curTree = tree;
   for (int i = 0; i < bits; i += 1) {

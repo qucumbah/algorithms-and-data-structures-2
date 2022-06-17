@@ -173,13 +173,27 @@ void testSparceIndex() {
   }
 }
 
+void testHuffmanEntry(void* input) {
+  char compressed[256];
+  char decompressed[256];
+
+  sprintf(compressed, "./temp/compressed_%s.bin", input);
+  sprintf(decompressed, "./temp/decompressed_%s", input);
+
+  huffmanEncode(input, compressed);
+  huffmanDecode(compressed, decompressed);
+
+  bool isCorrect = filesAreEqual(input, decompressed);
+  printf("Encoded %s %s\n", input, isCorrect ? "correctly" : "incorrectly");
+}
+
 void testHuffman() {
-  huffmanEncode("arraySmol.bin", "f2.bin");
-  huffmanDecode("f2.bin", "decoded.bin");
+  testHuffmanEntry("book.txt");
 }
 
 int main() {
-  testSparceIndex();
+  // testSparceIndex();
+  testHuffman();
 
   return 0;
 }

@@ -67,3 +67,25 @@ int binSearch(
 
   return (comparator(array + l * itemSize, itemToFind) >= 0) ? l : l + 1;
 }
+
+bool filesAreEqual(char* path1, char* path2) {
+  FILE* file1 = fopen(path1, "rb");
+  FILE* file2 = fopen(path2, "rb");
+
+  char byte1;
+  char byte2;
+
+  fread(&byte1, 1, 1, file1);
+  fread(&byte2, 1, 1, file2);
+
+  while (!feof(file1) && !feof(file2)) {
+    if (byte1 != byte2) {
+      return false;
+    }
+
+    fread(&byte1, 1, 1, file1);
+    fread(&byte2, 1, 1, file2);
+  }
+
+  return feof(file1) == feof(file2);
+}
