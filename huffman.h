@@ -13,7 +13,7 @@
 #endif
 
 int* calculateFrequencies(FILE* file) {
-  int* result = malloc(256 * sizeof(int));
+  int* result = calloc(256, sizeof(int));
 
   unsigned char byteBuffer;
   fread(&byteBuffer, 1, 1, file);

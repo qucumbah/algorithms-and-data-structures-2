@@ -46,6 +46,7 @@ void padWithZeroes(BitFileWriter* writer) {
   }
 
   writer->curByte <<= (8 - writer->bitsWrittenInByte);
+  printf("BITS "BYTE_TO_BINARY_PATTERN"\n", BYTE_TO_BINARY(writer->curByte));
   fwrite(&writer->curByte, 1, 1, writer->file);
   writer->curByte = 0;
   writer->bitsWrittenInByte = 0;
