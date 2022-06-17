@@ -251,12 +251,12 @@ void writeHeader(
 ) {
   writeTree(outFile, tree);
 
-  int totalMessageLength = 0;
+  unsigned long totalMessageLength = 0;
   for (int i = 0; i < 256; i += 1) {
     totalMessageLength += frequencies[i] * codeLengths[i];
   }
 
-  fwrite(&totalMessageLength, sizeof(int), 1, outFile);
+  fwrite(&totalMessageLength, sizeof(unsigned long), 1, outFile);
 }
 
 void writeMessage(FILE* outFile, unsigned char* codeLengths, unsigned char** codes, FILE* inFile) {
@@ -379,8 +379,8 @@ void huffmanDecode(char* inFilePath, char* outFilePath) {
   Tree* tree = readTree(inFile);
   logTree(tree, 1);
 
-  int bits;
-  fread(&bits, sizeof(int), 1, inFile);
+  unsigned long bits;
+  fread(&bits, sizeof(unsigned long), 1, inFile);
 
   printf("%d\n", bits);
 
@@ -389,7 +389,7 @@ void huffmanDecode(char* inFilePath, char* outFilePath) {
   BitFileReader* reader = createBitFileReader(inFile);
 
   Tree* curTree = tree;
-  for (int i = 0; i < bits; i += 1) {
+  for (unsigned long i = 0; i < bits; i += 1) {
     unsigned char bit = readBit(reader);
     printf("%d %d\n", i, bit);
 
