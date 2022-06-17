@@ -92,3 +92,11 @@ bool filesAreEqual(char* path1, char* path2) {
 
 // printf may be redefined to this to disable logging in some files
 void printfDummy(char* format, ...) {}
+
+int fileSize(char* path) {
+  FILE* file = fopen(path, "rb");
+  fseek(file, 0, SEEK_END);
+  int result = ftell(file);
+  fclose(file);
+  return result;
+}
