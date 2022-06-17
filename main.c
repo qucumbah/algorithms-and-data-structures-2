@@ -2,6 +2,8 @@
 #include <stdbool.h>
 #include <assert.h>
 
+#define DEBUG 0
+
 #include "util.h"
 #include "quicksort.h"
 #include "mergesort.h"

@@ -5,6 +5,10 @@
 
 #pragma once
 
+#if DEBUG != 1
+  #define printf printfDummy
+#endif
+
 typedef struct {
   FILE* file;
   unsigned char curByte;
@@ -46,3 +50,7 @@ void padWithZeroes(BitFileWriter* writer) {
   writer->curByte = 0;
   writer->bitsWrittenInByte = 0;
 }
+
+#if DEBUG != 1
+  #undef printf
+#endif

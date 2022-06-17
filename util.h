@@ -89,3 +89,6 @@ bool filesAreEqual(char* path1, char* path2) {
 
   return feof(file1) == feof(file2);
 }
+
+// printf may be redefined to this to disable logging in some files
+void printfDummy(char* format, ...) {}

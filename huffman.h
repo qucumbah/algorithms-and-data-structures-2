@@ -8,6 +8,10 @@
 
 #pragma once
 
+#if DEBUG != 1
+  #define printf printfDummy
+#endif
+
 int* calculateFrequencies(FILE* file) {
   int* result = malloc(256 * sizeof(int));
 
@@ -408,3 +412,7 @@ void huffmanDecode(char* inFilePath, char* outFilePath) {
 
   fclose(outFile);
 }
+
+#if DEBUG != 1
+  #undef printf
+#endif
