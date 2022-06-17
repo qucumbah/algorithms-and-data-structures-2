@@ -41,7 +41,7 @@ void padWithZeroes(BitFileWriter* writer) {
     return;
   }
 
-  writer->curByte << (8 - writer->bitsWrittenInByte);
+  writer->curByte <<= (8 - writer->bitsWrittenInByte);
   fwrite(&writer->curByte, 1, 1, writer->file);
   writer->curByte = 0;
   writer->bitsWrittenInByte = 0;
