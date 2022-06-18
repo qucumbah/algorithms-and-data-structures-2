@@ -105,7 +105,7 @@ void testHashTable() {
 }
 
 void testBlockFile() {
-  char blockFilePath[] = "data/block2.bin";
+  char blockFilePath[] = "data/block15.bin";
   createBlockFile(blockFilePath);
 
   List* keys = createList(sizeof(int));
@@ -146,7 +146,7 @@ void testBlockFile() {
 }
 
 void testIndexSearch() {
-  char* indexFileLocation = "data/index.bin";
+  char* indexFileLocation = "data/index2.bin";
 
   createIndexFile(indexFileLocation);
 
@@ -201,8 +201,8 @@ void testHuffman() {
 }
 
 int main() {
-  // testSparceIndex();
-  testHuffman();
+  testSparceIndex();
+  // testIndexSearch();
 
   return 0;
 }

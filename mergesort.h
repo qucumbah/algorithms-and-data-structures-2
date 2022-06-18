@@ -91,9 +91,9 @@ void merge(char* file, size_t itemSize, int length, int s, Comparator* comparato
 void mergesort(char* file, size_t itemSize, int length, Comparator* comparator) {
   int s = 1;
   while (s < length) {
-    // Фаза 1
+    // Phase 1
     split(file, itemSize, s);
-    // Фаза 2
+    // Phase 2
     merge(file, itemSize, length, s, comparator);
     s *= 2;
   }
