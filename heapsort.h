@@ -39,7 +39,7 @@ void heapFix(void* array, size_t itemSize, int arrayLength, int where, Comparato
 }
 
 void heapsort(void* array, size_t itemSize, int arrayLength, Comparator* comparator) {
-  for (int i = arrayLength - 1; i >= 0; i -= 1) {
+  for (int i = (arrayLength - 2) / 2; i >= 0; i -= 1) {
     heapFix(array, itemSize, arrayLength, i, comparator);
   }
 
