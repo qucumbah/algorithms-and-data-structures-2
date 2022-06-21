@@ -6,6 +6,7 @@
 
 #include "util.h"
 #include "quicksort.h"
+#include "heapsort.h"
 #include "mergesort.h"
 #include "Queue.h"
 #include "List.h"
@@ -14,6 +15,24 @@
 #include "indexFile.h"
 #include "sparceIndex.h"
 #include "huffman.h"
+
+void testQuicksort() {
+  int array[15] = {4, 22, 65, 67, 77, 87, 90, 23, 76, 90, 74, 5, 74, 89, 82};
+  quicksort(array, sizeof(int), sizeof(array) / sizeof(int), compareInts);
+
+  for (int i = 0; i < sizeof(array) / sizeof(int); i += 1) {
+    printf("%d\n", array[i]);
+  }
+}
+
+void testHeapsort() {
+  int array[15] = {11, 35, 67, 40, 69, 74, 63, 0, 66, 48, 25, 76, 72, 16, 80};
+  heapsort(array, sizeof(int), sizeof(array) / sizeof(int), compareInts);
+
+  for (int i = 0; i < sizeof(array) / sizeof(int); i += 1) {
+    printf("%d\n", array[i]);
+  }
+}
 
 void testMergeSort() {
   int array[15] = {4, 22, 65, 67, 77, 87, 90, 23, 76, 90, 74, 5, 74, 89, 82};
@@ -25,15 +44,6 @@ void testMergeSort() {
 
   mergesort("array.bin", sizeof(int), sizeof(array) / sizeof(int), compareInts);
   system("hexdump ./array.bin");
-}
-
-void testQuicksort() {
-  int array[15] = {4, 22, 65, 67, 77, 87, 90, 23, 76, 90, 74, 5, 74, 89, 82};
-  quicksort(array, sizeof(int), sizeof(array) / sizeof(int), compareInts);
-
-  for (int i = 0; i < sizeof(array) / sizeof(int); i += 1) {
-    printf("%d\n", array[i]);
-  }
 }
 
 void testQueue() {
@@ -201,8 +211,7 @@ void testHuffman() {
 }
 
 int main() {
-  testSparceIndex();
-  // testIndexSearch();
+  testHeapsort();
 
   return 0;
 }

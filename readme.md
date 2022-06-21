@@ -16,6 +16,7 @@ This is a collection of various algorithms and data structures that I wrote duri
     - [Bit file manipulation](#bit-file-manipulation)
   - [Sorting functions](#sorting-functions)
     - [Quicksort](#quicksort)
+    - [Heapsort](#heapsort)
     - [File merge sort](#file-merge-sort)
   - [Data structures](#data-structures)
     - [Dynamically resizing list](#dynamically-resizing-list)
@@ -163,6 +164,21 @@ void quicksort(
 ```
 
 A function for qsorting a generic array `array` with items of size `itemSize` and length `arrayLength`. Uses the provided `comparator` function for comparing array items.
+
+### Heapsort
+
+Main file: [`heapsort.h`](./heapsort.h).
+
+```c
+void heapsort(
+  void* array,
+  size_t itemSize,
+  int arrayLength,
+  Comparator* comparator
+);
+```
+
+A function for heap sorting a generic array `array` with items of size `itemSize` and length `arrayLength`. Uses the provided `comparator` function for comparing array items.
 
 ### File merge sort
 
