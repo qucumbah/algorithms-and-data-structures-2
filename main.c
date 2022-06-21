@@ -8,6 +8,7 @@
 #include "quicksort.h"
 #include "heapsort.h"
 #include "mergesort.h"
+#include "radixsort.h"
 #include "Queue.h"
 #include "List.h"
 #include "HashTable.h"
@@ -28,6 +29,15 @@ void testQuicksort() {
 void testHeapsort() {
   int array[15] = {11, 35, 67, 40, 69, 74, 63, 0, 66, 48, 25, 76, 72, 16, 80};
   heapsort(array, sizeof(int), sizeof(array) / sizeof(int), compareInts);
+
+  for (int i = 0; i < sizeof(array) / sizeof(int); i += 1) {
+    printf("%d\n", array[i]);
+  }
+}
+
+void testRadixsort() {
+  int array[15] = {11, 35, 67, 40, 69, 74, 63, 0, 66, 48, 25, 76, 72, 16, 80};
+  radixsort(array, sizeof(int), sizeof(array) / sizeof(int), extractKeyFromInt);
 
   for (int i = 0; i < sizeof(array) / sizeof(int); i += 1) {
     printf("%d\n", array[i]);
@@ -211,7 +221,7 @@ void testHuffman() {
 }
 
 int main() {
-  testHeapsort();
+  testRadixsort();
 
   return 0;
 }

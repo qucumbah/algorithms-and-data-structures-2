@@ -9,6 +9,7 @@ This is a collection of various algorithms and data structures that I wrote duri
   - [Utility](#utility)
     - [Swap](#swap)
     - [Comparator](#comparator)
+    - [Key extractor](#key-extractor)
     - [Mapping array](#mapping-array)
     - [Binary search](#binary-search)
     - [File equality](#file-equality)
@@ -16,7 +17,8 @@ This is a collection of various algorithms and data structures that I wrote duri
     - [Bit file manipulation](#bit-file-manipulation)
   - [Sorting functions](#sorting-functions)
     - [Quicksort](#quicksort)
-    - [Heapsort](#heapsort)
+    - [Heap sort](#heap-sort)
+    - [Radix sort](#radix-sort)
     - [File merge sort](#file-merge-sort)
   - [Data structures](#data-structures)
     - [Dynamically resizing list](#dynamically-resizing-list)
@@ -71,7 +73,15 @@ Swaps two elements with indices `a` and `b` in `array` that has elements of size
 typedef int (Comparator)(const void* a, const void* b);
 ```
 
-Type definitions for comparison function that is used in sorting and search algorithms.
+Type definition for comparison function that is used in sorting and search algorithms.
+
+### Key extractor
+
+```c
+typedef int (KeyExtractor)(const void* item);
+```
+
+Type definition function that extracts a key from an item. Used in radix sort.
 
 ### Mapping array
 
@@ -165,7 +175,7 @@ void quicksort(
 
 A function for qsorting a generic array `array` with items of size `itemSize` and length `arrayLength`. Uses the provided `comparator` function for comparing array items.
 
-### Heapsort
+### Heap sort
 
 Main file: [`heapsort.h`](./heapsort.h).
 
@@ -179,6 +189,22 @@ void heapsort(
 ```
 
 A function for heap sorting a generic array `array` with items of size `itemSize` and length `arrayLength`. Uses the provided `comparator` function for comparing array items.
+
+### Radix sort
+
+Main file: [`radixsort.h`](./radixsort.h).
+
+```c
+void radixsort(
+  void* array,
+  size_t itemSize,
+  int arrayLength,
+  KeyExtractor* keyExtractor
+);
+```
+
+A function for radix sorting a generic array `array` with items of size `itemSize` and length `arrayLength`.
+Uses the provided `keyExtractor` function to extract integer keys from items.
 
 ### File merge sort
 

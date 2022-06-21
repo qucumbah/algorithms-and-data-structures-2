@@ -3,6 +3,7 @@
 #pragma once
 
 typedef int (Comparator)(const void* a, const void* b);
+typedef int (KeyExtractor)(const void* item);
 
 void swap(void* array, size_t itemSize, int a, int b) {
   char tempByte;
@@ -17,6 +18,10 @@ void swap(void* array, size_t itemSize, int a, int b) {
 
 int compareInts(const void* a, const void* b) {
   return *(int*)a - *(int*)b;
+}
+
+int extractKeyFromInt(const void* item) {
+  return *(int*)item;
 }
 
 typedef void (MapFn)(void* from, void* to);
